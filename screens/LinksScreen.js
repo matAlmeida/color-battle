@@ -1,6 +1,7 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { Svg } from "expo";
+import { ScrollView, StyleSheet, TouchableHighlight } from "react-native";
+import { Svg, Icon } from "expo";
+import ColorPalette from "react-native-color-palette";
 import Layout from "../constants/Layout";
 // import { ExpoLinksView } from '@expo/samples';
 
@@ -9,6 +10,8 @@ export default class LinksScreen extends React.Component {
     super(props);
 
     this.state = {
+      paletteVisible: false,
+      selectedNode: undefined,
       nodes: [
         {
           label: 1,
@@ -69,7 +72,52 @@ export default class LinksScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: "Links"
+    title: "Color Battle"
+  };
+
+  _onNodePress = label => {
+    const newNodes = this.state.nodes.map(node => {
+      if (node.label === label && !node.lock) {
+        const toggle = this.state.selectedNode == label ? undefined : label;
+        const color = toggle ? "#919191" : "#e1e1e1";
+
+        this.setState({
+          selectedNode: toggle,
+          paletteVisible: toggle ? true : false
+        });
+
+        return { ...node, color };
+      } else {
+        return {
+          ...node,
+          color: node.color == "#919191" ? "#e1e1e1" : node.color
+        };
+      }
+    });
+
+    this.setState({ nodes: newNodes });
+  };
+
+  _colorSelect = color => {
+    const newNodes = this.state.nodes.map(node => {
+      if (node.label === this.state.selectedNode) {
+        return { ...node, color, lock: true };
+      }
+      return { ...node };
+    });
+
+    this.setState({ nodes: newNodes, paletteVisible: false });
+  };
+
+  _cleanOneNode = label => {
+    const newNodes = this.state.nodes.map(node => {
+      if (node.label === label) {
+        return { ...node, color: "#e1e1e1", lock: false };
+      }
+      return { ...node };
+    });
+
+    this.setState({ nodes: newNodes });
   };
 
   renderNodes() {
@@ -81,10 +129,12 @@ export default class LinksScreen extends React.Component {
           key={node.label}
           cx={node.pos[0] * 50 + 75}
           cy={node.pos[1] * 50 + 75}
-          r={40}
+          r={20}
           strokeWidth={2.5}
           stroke="#919191"
           fill={node.color}
+          onPressIn={() => this._onNodePress(node.label)}
+          onLongPress={() => this._cleanOneNode(node.label)}
         />
       );
     });
@@ -127,6 +177,21 @@ export default class LinksScreen extends React.Component {
           {this.renderEdges()}
           {this.renderNodes()}
         </Svg>
+        {this.state.paletteVisible && (
+          <ColorPalette
+            onChange={this._colorSelect}
+            defaultColor={"#E74C3C"}
+            colors={["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"]}
+            title={"-"}
+            icon={
+              <Icon.Ionicons
+                name="ios-checkmark-circle-outline"
+                size={25}
+                color="black"
+              />
+            }
+          />
+        )}
       </ScrollView>
     );
   }
