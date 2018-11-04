@@ -122,14 +122,16 @@ export default class LinksScreen extends React.Component {
 
   renderNodes() {
     const nodes = this.state.nodes;
+    const nodeRadius = (Layout.window.width / 9 - 10) / 2;
+    const multiplier = 9 + 1.4 * nodeRadius;
 
     return nodes.map(node => {
       return (
         <Svg.Circle
           key={node.label}
-          cx={node.pos[0] * 50 + 75}
-          cy={node.pos[1] * 50 + 75}
-          r={20}
+          cx={node.pos[0] * multiplier + nodeRadius * 2.8}
+          cy={node.pos[1] * multiplier + nodeRadius * 2.8}
+          r={nodeRadius}
           strokeWidth={2.5}
           stroke="#919191"
           fill={node.color}
@@ -142,16 +144,18 @@ export default class LinksScreen extends React.Component {
 
   renderEdges() {
     const nodes = this.state.nodes;
+    const nodeRadius = (Layout.window.width / 9 - 10) / 2;
+    const multiplier = 9 + 1.4 * nodeRadius;
 
     const lines = nodes.map(node => {
       return node.links.map(link => {
         return (
           <Svg.Line
             key={node.label + link}
-            x1={node.pos[0] * 50 + 75}
-            y1={node.pos[1] * 50 + 75}
-            x2={nodes[link - 1].pos[0] * 50 + 75}
-            y2={nodes[link - 1].pos[1] * 50 + 75}
+            x1={node.pos[0] * multiplier + nodeRadius * 2.8}
+            y1={node.pos[1] * multiplier + nodeRadius * 2.8}
+            x2={nodes[link - 1].pos[0] * multiplier + nodeRadius * 2.8}
+            y2={nodes[link - 1].pos[1] * multiplier + nodeRadius * 2.8}
             stroke="gray"
             strokeWidth="2"
           />
