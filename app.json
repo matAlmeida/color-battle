@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "hybrid-color-battle",
-    "description": "A very interesting project.",
-    "slug": "hybrid-color-battle",
+    "name": "color-battle",
+    "description": "An application of the game Color Battle",
+    "slug": "color-battle",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
@@ -17,9 +17,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     }
