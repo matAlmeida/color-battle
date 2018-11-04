@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "color-battle",
-    "description": "An application of the game Color Battle",
+    "description": "An React Native application of the game Color Battle",
     "slug": "color-battle",
     "privacy": "public",
     "sdkVersion": "31.0.0",
