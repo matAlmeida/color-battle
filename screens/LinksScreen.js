@@ -79,15 +79,18 @@ export default class LinksScreen extends React.Component {
       scoreProps: {
         player1: {
           points: 0,
-          turn: whoStart == 0
+          turn: whoStart == 0,
+          name: "Matheus"
         },
         player2: {
           points: 0,
-          turn: whoStart == 1
+          turn: whoStart == 1,
+          name: "Gabriel"
         },
         turnColor: "#42f4c8",
         idleColor: "#f2f2f2"
-      }
+      },
+      remainingNodes: 9
     };
   }
 
@@ -126,7 +129,13 @@ export default class LinksScreen extends React.Component {
       return { ...node };
     });
 
-    this.setState({ nodes: newNodes, paletteVisible: false });
+    this.setState({
+      nodes: newNodes,
+      paletteVisible: false,
+      remainingNodes: (this.state.remainingNodes -= 1)
+    });
+
+    this._togglePlayerTurn();
   };
 
   _cleanOneNode = label => {
@@ -137,24 +146,55 @@ export default class LinksScreen extends React.Component {
       return { ...node };
     });
 
-    this.setState({ nodes: newNodes });
+    this.setState({
+      nodes: newNodes,
+      remainingNodes: (this.state.remainingNodes += 1)
+    });
+  };
+
+  _togglePlayerTurn = () => {
+    let { player1, player2 } = this.state.scoreProps;
+
+    if (player1.turn) {
+      player1.turn = false;
+      player2.turn = true;
+    } else {
+      player1.turn = true;
+      player2.turn = false;
+    }
+
+    const newScore = {
+      ...this.state.scoreProps,
+      player1,
+      player2
+    };
+
+    this.setState({ scoreProps: newScore });
   };
 
   _pointToPlayerOne = () => {
-    const scoreProps = this.state.scoreProps;
-    const { points, turn } = this.state.scoreProps.player1;
+    const { points, turn, name } = this.state.scoreProps.player1;
+
+    const newScore = {
+      ...this.state.scoreProps,
+      player1: { points: points + 1, turn, name }
+    };
 
     this.setState({
-      scoreProps: { ...scoreProps, player1: { points: (points += 1), turn } }
+      scoreProps: newScore
     });
   };
 
   _pointToPlayerTwo = () => {
-    const scoreProps = this.state.scoreProps;
-    const { points, turn } = this.state.scoreProps.player2;
+    const { points, turn, name } = this.state.scoreProps.player2;
+
+    const newScore = {
+      ...this.state.scoreProps,
+      player2: { points: points + 1, turn, name }
+    };
 
     this.setState({
-      scoreProps: { ...scoreProps, player2: { points: (points += 1), turn } }
+      scoreProps: newScore
     });
   };
 
@@ -205,14 +245,28 @@ export default class LinksScreen extends React.Component {
   }
 
   resetColor() {
-    const reseted = this.nodes.map(node => {
+    const reseted = this.state.nodes.map(node => {
       return { ...node, color: "#e1e1e1" };
     });
 
-    this.setState({ nodes: reseted });
+    this.setState({ nodes: reseted, remainingNodes: 9 });
   }
 
+  givePoints = () => {
+    this.resetColor();
+
+    if (!this.state.scoreProps.player1.turn) {
+      this._pointToPlayerOne();
+    } else {
+      this._pointToPlayerTwo();
+    }
+  };
+
   render() {
+    if (this.state.remainingNodes == 0) {
+      this.givePoints();
+    }
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>

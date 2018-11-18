@@ -31,7 +31,7 @@ export default class Score extends Component {
           </Svg>
           <View style={styles.textContainer}>
             <Text style={styles.whatPlayerText}>Jogador 1</Text>
-            <Text style={styles.playerText}>Matheus</Text>
+            <Text style={styles.playerText}>{player1.name}</Text>
           </View>
         </View>
         <View style={styles.player}>
@@ -57,7 +57,7 @@ export default class Score extends Component {
           </Svg>
           <View style={styles.textContainer}>
             <Text style={styles.whatPlayerText}>Jogador 2</Text>
-            <Text style={styles.playerText}>Gabriel</Text>
+            <Text style={styles.playerText}>{player2.name}</Text>
           </View>
         </View>
       </View>
