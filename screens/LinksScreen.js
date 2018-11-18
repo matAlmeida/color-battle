@@ -68,7 +68,19 @@ export default class LinksScreen extends React.Component {
           links: [],
           color: "#e1e1e1"
         }
-      ]
+      ],
+      scoreProps: {
+        player1: {
+          points: 0,
+          turn: true
+        },
+        player2: {
+          points: 0,
+          turn: false
+        },
+        turnColor: "#42f4c8",
+        idleColor: "#f2f2f2"
+      }
     };
   }
 
@@ -184,7 +196,7 @@ export default class LinksScreen extends React.Component {
             {this.renderNodes()}
           </Svg>
         </View>
-        {!this.state.paletteVisible && <Score />}
+        {!this.state.paletteVisible && <Score {...this.state.scoreProps} />}
         {this.state.paletteVisible && (
           <ColorPalette
             onChange={this._colorSelect}
