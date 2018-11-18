@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   helpContainer: {
+    paddingHorizontal: 20,
     marginTop: 15,
     alignItems: "center"
   },

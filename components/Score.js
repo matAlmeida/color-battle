@@ -1,27 +1,29 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
 import { Svg } from "expo";
+import Layout from "../constants/Layout";
 
 export default class Score extends Component {
   render() {
     const { player1, player2, turnColor, idleColor } = this.props;
+    const nodeRadius = (Layout.window.width / 9 - 10) / 2 + 5;
 
     return (
       <View style={styles.scoreBoard}>
         <View style={styles.player}>
-          <Svg height={86} width={86}>
+          <Svg height={(nodeRadius + 3) * 2} width={(nodeRadius + 3) * 2}>
             <Svg.Circle
-              cx={43}
-              cy={43}
-              r={40}
+              cx={nodeRadius + 3}
+              cy={nodeRadius + 3}
+              r={nodeRadius}
               strokeWidth={2.5}
               stroke="#919191"
               fill={player1.turn ? turnColor : idleColor}
             />
             <Svg.Text
-              x="43"
-              y="53"
-              fontSize="32"
+              x={nodeRadius + 3}
+              y={nodeRadius + 3 + 10}
+              fontSize={nodeRadius + 3}
               fonWeight="bold"
               textAnchor="middle"
               scale="1"
@@ -35,19 +37,19 @@ export default class Score extends Component {
           </View>
         </View>
         <View style={styles.player}>
-          <Svg height={86} width={86}>
+          <Svg height={(nodeRadius + 3) * 2} width={(nodeRadius + 3) * 2}>
             <Svg.Circle
-              cx={43}
-              cy={43}
-              r={40}
+              cx={nodeRadius + 3}
+              cy={nodeRadius + 3}
+              r={nodeRadius}
               strokeWidth={2.5}
               stroke="#919191"
               fill={player2.turn ? turnColor : idleColor}
             />
             <Svg.Text
-              x="43"
-              y="53"
-              fontSize="32"
+              x={nodeRadius + 3}
+              y={nodeRadius + 3 + 10}
+              fontSize={nodeRadius + 3}
               fonWeight="bold"
               textAnchor="middle"
               scale="1"
