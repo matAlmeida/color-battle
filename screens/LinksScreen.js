@@ -133,6 +133,24 @@ export default class LinksScreen extends React.Component {
     this.setState({ nodes: newNodes });
   };
 
+  _pointToPlayerOne = () => {
+    const scoreProps = this.state.scoreProps;
+    const { points, turn } = this.state.scoreProps.player1;
+
+    this.setState({
+      scoreProps: { ...scoreProps, player1: { points: (points += 1), turn } }
+    });
+  };
+
+  _pointToPlayerTwo = () => {
+    const scoreProps = this.state.scoreProps;
+    const { points, turn } = this.state.scoreProps.player2;
+
+    this.setState({
+      scoreProps: { ...scoreProps, player2: { points: (points += 1), turn } }
+    });
+  };
+
   renderNodes() {
     const nodes = this.state.nodes;
     const nodeRadius = (Layout.window.width / 9 - 10) / 2;
