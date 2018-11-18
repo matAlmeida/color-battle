@@ -1,8 +1,9 @@
 import React from "react";
-import { ScrollView, StyleSheet, TouchableHighlight } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { Svg, Icon } from "expo";
 import ColorPalette from "react-native-color-palette";
 import Layout from "../constants/Layout";
+import Score from "../components/Score";
 // import { ExpoLinksView } from '@expo/samples';
 
 export default class LinksScreen extends React.Component {
@@ -177,10 +178,13 @@ export default class LinksScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Svg height={Layout.window.width} width={Layout.window.width}>
-          {this.renderEdges()}
-          {this.renderNodes()}
-        </Svg>
+        <View style={styles.container}>
+          <Svg height={Layout.window.width} width={Layout.window.width}>
+            {this.renderEdges()}
+            {this.renderNodes()}
+          </Svg>
+        </View>
+        <Score />
         {this.state.paletteVisible && (
           <ColorPalette
             onChange={this._colorSelect}
