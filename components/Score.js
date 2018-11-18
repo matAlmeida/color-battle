@@ -28,7 +28,10 @@ export default class Score extends Component {
               1
             </Svg.Text>
           </Svg>
-          <Text style={styles.playerText}>Matheus</Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.whatPlayerText}>Jogador 1</Text>
+            <Text style={styles.playerText}>Matheus</Text>
+          </View>
         </View>
         <View style={styles.player}>
           <Svg height={86} width={86}>
@@ -51,7 +54,10 @@ export default class Score extends Component {
               1
             </Svg.Text>
           </Svg>
-          <Text style={styles.playerText}>Gabriel</Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.whatPlayerText}>Jogador 2</Text>
+            <Text style={styles.playerText}>Gabriel</Text>
+          </View>
         </View>
       </View>
     );
@@ -81,16 +87,22 @@ const styles = StyleSheet.create({
     }),
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: "#c2c2c2",
-    padding: 20
+    backgroundColor: "#fff",
+    padding: 20,
+    paddingTop: 35
   },
   player: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center"
   },
+  textContainer: {
+    marginHorizontal: 10
+  },
+  whatPlayerText: {
+    fontSize: 16
+  },
   playerText: {
-    marginHorizontal: 10,
-    fontSize: 20
+    fontSize: 26
   }
 });
