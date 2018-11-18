@@ -136,6 +136,9 @@ export default class LinksScreen extends React.Component {
     });
 
     this._togglePlayerTurn();
+    if (this.state.remainingNodes == 0) {
+      this.givePoints();
+    }
   };
 
   _cleanOneNode = label => {
@@ -263,10 +266,6 @@ export default class LinksScreen extends React.Component {
   };
 
   render() {
-    if (this.state.remainingNodes == 0) {
-      this.givePoints();
-    }
-
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>
