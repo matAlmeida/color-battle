@@ -1,10 +1,27 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
 import { Svg } from "expo";
-import Layout from "../constants/Layout";
 
 export default class Score extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      player1: {
+        points: 0,
+        turn: true
+      },
+      player2: {
+        points: 0,
+        turn: false
+      },
+      turnColor: "#42f4c8",
+      staleColor: "#f2f2f2"
+    };
+  }
+
   render() {
+    const { player1, player2, turnColor, staleColor } = this.state;
+
     return (
       <View style={styles.scoreBoard}>
         <View style={styles.player}>
@@ -15,7 +32,7 @@ export default class Score extends Component {
               r={40}
               strokeWidth={2.5}
               stroke="#919191"
-              fill="#f2f2f2"
+              fill={player1.turn ? turnColor : staleColor}
             />
             <Svg.Text
               x="43"
@@ -25,7 +42,7 @@ export default class Score extends Component {
               textAnchor="middle"
               scale="1"
             >
-              1
+              {player1.points}
             </Svg.Text>
           </Svg>
           <View style={styles.textContainer}>
@@ -41,7 +58,7 @@ export default class Score extends Component {
               r={40}
               strokeWidth={2.5}
               stroke="#919191"
-              fill="#f2f2f2"
+              fill={player2.turn ? turnColor : staleColor}
             />
             <Svg.Text
               x="43"
@@ -51,7 +68,7 @@ export default class Score extends Component {
               textAnchor="middle"
               scale="1"
             >
-              1
+              {player2.points}
             </Svg.Text>
           </Svg>
           <View style={styles.textContainer}>

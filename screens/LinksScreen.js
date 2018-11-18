@@ -184,7 +184,7 @@ export default class LinksScreen extends React.Component {
             {this.renderNodes()}
           </Svg>
         </View>
-        <Score />
+        {!this.state.paletteVisible && <Score />}
         {this.state.paletteVisible && (
           <ColorPalette
             onChange={this._colorSelect}
