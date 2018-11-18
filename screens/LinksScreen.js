@@ -85,7 +85,7 @@ export default class LinksScreen extends React.Component {
         player2: {
           points: 0,
           turn: whoStart == 1,
-          name: "Gabriel"
+          name: "Ícaro"
         },
         turnColor: "#42f4c8",
         idleColor: "#f2f2f2"
