@@ -10,6 +10,13 @@ export default class LinksScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    const whoStart =
+      parseInt(
+        Math.random()
+          .toString()
+          .slice(2, 3)
+      ) % 2;
+
     this.state = {
       paletteVisible: false,
       selectedNode: undefined,
@@ -72,11 +79,11 @@ export default class LinksScreen extends React.Component {
       scoreProps: {
         player1: {
           points: 0,
-          turn: true
+          turn: whoStart == 0
         },
         player2: {
           points: 0,
-          turn: false
+          turn: whoStart == 1
         },
         turnColor: "#42f4c8",
         idleColor: "#f2f2f2"
