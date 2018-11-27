@@ -1,11 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Modal,
+  TouchableHighlight,
+  Text
+} from "react-native";
 import { Svg, Icon } from "expo";
 import ColorPalette from "react-native-color-palette";
 import Layout from "../constants/Layout";
 import Score from "../components/Score";
-// import { ExpoLinksView } from '@expo/samples';
 
 // Api Wrapper
 import { getGraph } from "../wrappers/api";
@@ -23,6 +29,8 @@ export default class GameScreen extends React.Component {
       ) % 2;
 
     this.state = {
+      hasWinner: 0, // 0 - no, 1 - player1, 2 - player2
+      showModal: false,
       paletteVisible: false,
       selectedNode: undefined,
       scoreProps: {
@@ -106,7 +114,7 @@ export default class GameScreen extends React.Component {
     });
 
     this._togglePlayerTurn();
-    if (remainingNodes == 0) {
+    if (remainingNodes - 1 == 0) {
       this.givePoints();
     }
   };
@@ -149,11 +157,12 @@ export default class GameScreen extends React.Component {
   };
 
   _pointToPlayerOne = () => {
-    const { points, turn, name } = this.state.scoreProps.player1;
+    const scoreProps = this.state.scoreProps;
+    const player1 = scoreProps.player1;
 
     const newScore = {
-      ...this.state.scoreProps,
-      player1: { points: points + 1, turn, name }
+      ...scoreProps,
+      player1: { ...player1, points: player1.points + 1 }
     };
 
     this.setState({
@@ -162,11 +171,12 @@ export default class GameScreen extends React.Component {
   };
 
   _pointToPlayerTwo = () => {
-    const { points, turn, name } = this.state.scoreProps.player2;
+    const scoreProps = this.state.scoreProps;
+    const player2 = scoreProps.player2;
 
     const newScore = {
-      ...this.state.scoreProps,
-      player2: { points: points + 1, turn, name }
+      ...scoreProps,
+      player2: { ...player2, points: player2.points + 1 }
     };
 
     this.setState({
@@ -223,27 +233,98 @@ export default class GameScreen extends React.Component {
 
   resetColor() {
     const reseted = this.state.nodes.map(node => {
-      return { ...node, color: "#e1e1e1" };
+      return { ...node, color: "#e1e1e1", lock: false };
     });
 
     this.setState({ nodes: reseted, remainingNodes: 9 });
   }
 
+  _willHaveAWinner = () => {
+    const { player1, player2 } = this.state.scoreProps;
+
+    if (!player1.turn && player1.points + 1 == 2) {
+      return 1;
+    } else if (!player2.turn && player2.points + 1 == 2) {
+      return 2;
+    }
+
+    return 0;
+  };
+
   givePoints = () => {
     this.resetColor();
+    const willHaveAWinner = this._willHaveAWinner();
 
-    if (!this.state.scoreProps.player1.turn) {
-      this._pointToPlayerOne();
+    if (willHaveAWinner) {
+      this.setState({ hasWinner: willHaveAWinner, showModal: true });
     } else {
-      this._pointToPlayerTwo();
+      if (!this.state.scoreProps.player1.turn) {
+        this._pointToPlayerOne();
+      } else {
+        this._pointToPlayerTwo();
+      }
     }
+  };
+
+  restartGame = () => {
+    this.resetColor();
+
+    const whoStart =
+      parseInt(
+        Math.random()
+          .toString()
+          .slice(2, 3)
+      ) % 2;
+
+    this.setState({
+      hasWinner: 0,
+      showModal: false,
+      scoreProps: {
+        ...this.state.scoreProps,
+        player1: {
+          ...this.state.player1,
+          points: 0,
+          turn: whoStart == 0
+        },
+        player2: {
+          ...this.state.player2,
+          points: 0,
+          turn: whoStart == 1
+        }
+      }
+    });
   };
 
   render() {
     const { paletteColors } = this.props;
-    const { paletteVisible, scoreProps } = this.state;
+    const { paletteVisible, scoreProps, showModal, hasWinner } = this.state;
     return (
       <ScrollView style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={showModal}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={{ marginTop: 22 }}>
+            {hasWinner && (
+              <View>
+                <Text>{scoreProps[`player${hasWinner}`].name} Won!</Text>
+
+                <TouchableHighlight
+                  onPress={() => {
+                    this.restartGame();
+                  }}
+                >
+                  <Text>Restart the Game</Text>
+                </TouchableHighlight>
+              </View>
+            )}
+          </View>
+        </Modal>
+
         <View style={styles.container}>
           <Svg height={Layout.window.width} width={Layout.window.width}>
             {this.renderEdges()}
