@@ -7,7 +7,7 @@ import {
 
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
+import GameScreen from "../screens/GameScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
 const HomeStack = createStackNavigator({
@@ -28,11 +28,11 @@ HomeStack.navigationOptions = {
   )
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen
+const GameStack = createStackNavigator({
+  Game: GameScreen
 });
 
-LinksStack.navigationOptions = {
+GameStack.navigationOptions = {
   tabBarLabel: "Color Battle",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -58,6 +58,6 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  GameStack,
   SettingsStack
 });
