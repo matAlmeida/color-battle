@@ -13,18 +13,27 @@ import { getGraph } from "../wrappers/api";
 GameScreen.propTypes = {
   defaultColor: PropTypes.string,
   paletteColors: PropTypes.arrayOf(PropTypes.string),
-  selectedColor: PropTypes.string
+  selectedColor: PropTypes.string,
+  turnColor: PropTypes.string,
+  idleColor: PropTypes.string,
+  player1Name: PropTypes.string,
+  player2Name: PropTypes.string
 };
 
 GameScreen.defaultProps = {
   defaultColor: "#e1e1e1",
   paletteColors: ["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"],
-  selectedColor: "#919191"
+  selectedColor: "#919191",
+  turnColor: "#42f4c8",
+  idleColor: "#f2f2f2",
+  player1Name: "Matheus",
+  player2Name: "Ícaro"
 };
 
 export default class GameScreen extends React.Component {
   constructor(props) {
     super(props);
+    const { turnColor, idleColor, player1Name, player2Name } = props;
 
     const whoStart =
       parseInt(
@@ -40,15 +49,15 @@ export default class GameScreen extends React.Component {
         player1: {
           points: 0,
           turn: whoStart == 0,
-          name: "Matheus"
+          name: player1Name
         },
         player2: {
           points: 0,
           turn: whoStart == 1,
-          name: "Ícaro"
+          name: player2Name
         },
-        turnColor: "#42f4c8",
-        idleColor: "#f2f2f2"
+        turnColor,
+        idleColor
       },
       remainingNodes: 9
     };
@@ -56,6 +65,8 @@ export default class GameScreen extends React.Component {
 
   componentWillMount = () => {
     const { defaultColor, paletteColors } = this.props;
+
+    const nodes = getGraph();
 
     const newNodes = nodes.map(node => {
       return {
@@ -73,10 +84,12 @@ export default class GameScreen extends React.Component {
   };
 
   _onNodePress = label => {
+    const { selectedColor, defaultColor } = this.props;
+
     const newNodes = this.state.nodes.map(node => {
       if (node.label === label && !node.lock) {
         const toggle = this.state.selectedNode == label ? undefined : label;
-        const color = toggle ? "#919191" : "#e1e1e1";
+        const color = toggle ? selectedColor : defaultColor;
 
         this.setState({
           selectedNode: toggle,
@@ -87,7 +100,7 @@ export default class GameScreen extends React.Component {
       } else {
         return {
           ...node,
-          color: node.color == "#919191" ? "#e1e1e1" : node.color
+          color: node.color == selectedColor ? defaultColor : node.color
         };
       }
     });
@@ -116,9 +129,10 @@ export default class GameScreen extends React.Component {
   };
 
   _cleanOneNode = label => {
+    const { defaultColor } = this.props;
     const newNodes = this.state.nodes.map(node => {
       if (node.label === label) {
-        return { ...node, color: "#e1e1e1", lock: false };
+        return { ...node, color: defaultColor, lock: false };
       }
       return { ...node };
     });
@@ -176,6 +190,7 @@ export default class GameScreen extends React.Component {
   };
 
   renderNodes() {
+    const { selectedColor } = this.props;
     const nodes = this.state.nodes;
     const nodeRadius = (Layout.window.width / 9 - 10) / 2;
     const multiplier = 9 + 1.4 * nodeRadius;
@@ -188,7 +203,7 @@ export default class GameScreen extends React.Component {
           cy={node.pos[1] * multiplier + nodeRadius * 2.8}
           r={nodeRadius}
           strokeWidth={2.5}
-          stroke="#919191"
+          stroke={selectedColor}
           fill={node.color}
           onPressIn={() => this._onNodePress(node.label)}
           onLongPress={() => this._cleanOneNode(node.label)}

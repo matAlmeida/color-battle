@@ -10,6 +10,8 @@ export default class LinksScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    const colors = ["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"];
+    const defaultColor = "#e1e1e1";
     const whoStart =
       parseInt(
         Math.random()
@@ -18,6 +20,7 @@ export default class LinksScreen extends React.Component {
       ) % 2;
 
     this.state = {
+      colors,
       paletteVisible: false,
       selectedNode: undefined,
       nodes: [
@@ -25,55 +28,64 @@ export default class LinksScreen extends React.Component {
           label: 1,
           pos: [5, 0],
           links: [2, 6, 7, 9],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 2,
           pos: [9, 0],
           links: [3, 9],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 3,
           pos: [9, 4],
           links: [4, 9],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 4,
           pos: [6, 7],
           links: [5, 8],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 5,
           pos: [2, 5],
           links: [6, 7, 8],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 6,
           pos: [0, 1],
           links: [7],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 7,
           pos: [2, 3],
           links: [8],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 8,
           pos: [5, 5],
           links: [9],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         },
         {
           label: 9,
           pos: [7, 2],
           links: [],
-          color: "#e1e1e1"
+          availableColors: defaultColor,
+          colors
         }
       ],
       scoreProps: {
@@ -278,8 +290,8 @@ export default class LinksScreen extends React.Component {
         {this.state.paletteVisible && (
           <ColorPalette
             onChange={this._colorSelect}
-            defaultColor={"#E74C3C"}
-            colors={["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"]}
+            defaultColor={this.state.colors[0]}
+            colors={this.state.colors}
             title={"-"}
             icon={
               <Icon.Ionicons
