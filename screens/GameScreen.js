@@ -310,43 +310,11 @@ export default class GameScreen extends React.Component {
             Alert.alert("Modal has been closed.");
           }}
         >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.4)"
-            }}
-          >
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                height: Layout.window.height * 0.5,
-                width: Layout.window.width * 0.8,
-                backgroundColor: turnColor,
-                ...Platform.select({
-                  ios: {
-                    shadowColor: "black",
-                    shadowOffset: { height: -3 },
-                    shadowOpacity: 0.75,
-                    shadowRadius: 2
-                  },
-                  android: {
-                    elevation: 40
-                  }
-                })
-              }}
-            >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalCard}>
               <View>
                 {hasWinner && (
-                  <Text
-                    style={{
-                      fontSize: 30,
-                      color: "black",
-                      textAlign: "center"
-                    }}
-                  >
+                  <Text style={styles.modalText1}>
                     {scoreProps[`player${hasWinner}`].name} Ganhou!
                   </Text>
                 )}
@@ -356,25 +324,8 @@ export default class GameScreen extends React.Component {
                   this.restartGame();
                 }}
               >
-                <View
-                  style={{
-                    marginTop: 20,
-                    width: 300,
-                    height: 100,
-                    backgroundColor: "white",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "black",
-                      textAlign: "center"
-                    }}
-                  >
-                    Restart the Game
-                  </Text>
+                <View style={styles.modalButtonContainer}>
+                  <Text style={styles.modalButtonText}>Restart the Game</Text>
                 </View>
               </TouchableHighlight>
             </View>
@@ -413,6 +364,48 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: "#fff"
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.4)"
+  },
+  modalCard: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: Layout.window.height * 0.5,
+    width: Layout.window.width * 0.8,
+    backgroundColor: "#42f4c8",
+    ...Platform.select({
+      ios: {
+        shadowColor: "black",
+        shadowOffset: { height: -3 },
+        shadowOpacity: 0.75,
+        shadowRadius: 2
+      },
+      android: {
+        elevation: 40
+      }
+    })
+  },
+  modalText1: {
+    fontSize: 30,
+    color: "black",
+    textAlign: "center"
+  },
+  modalButtonContainer: {
+    marginTop: 20,
+    width: 300,
+    height: 100,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalButtonText: {
+    fontSize: 20,
+    color: "black",
+    textAlign: "center"
   }
 });
 
