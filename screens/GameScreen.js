@@ -241,10 +241,11 @@ export default class GameScreen extends React.Component {
 
   _willHaveAWinner = () => {
     const { player1, player2 } = this.state.scoreProps;
+    const bo = 2;
 
-    if (!player1.turn && player1.points + 1 == 2) {
+    if (!player1.turn && player1.points + 1 == bo) {
       return 1;
-    } else if (!player2.turn && player2.points + 1 == 2) {
+    } else if (!player2.turn && player2.points + 1 == bo) {
       return 2;
     }
 
@@ -282,12 +283,12 @@ export default class GameScreen extends React.Component {
       scoreProps: {
         ...this.state.scoreProps,
         player1: {
-          ...this.state.player1,
+          ...this.state.scoreProps.player1,
           points: 0,
           turn: whoStart == 0
         },
         player2: {
-          ...this.state.player2,
+          ...this.state.scoreProps.player2,
           points: 0,
           turn: whoStart == 1
         }
@@ -311,7 +312,7 @@ export default class GameScreen extends React.Component {
           <View style={{ marginTop: 22 }}>
             {hasWinner && (
               <View>
-                <Text>{scoreProps[`player${hasWinner}`].name} Won!</Text>
+                <Text>{scoreProps[`player${hasWinner}`].name} Ganhou!</Text>
 
                 <TouchableHighlight
                   onPress={() => {
