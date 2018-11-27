@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Modal,
   TouchableHighlight,
-  Text
+  Text,
+  Platform
 } from "react-native";
 import { Svg, Icon } from "expo";
 import ColorPalette from "react-native-color-palette";
@@ -241,7 +242,7 @@ export default class GameScreen extends React.Component {
 
   _willHaveAWinner = () => {
     const { player1, player2 } = this.state.scoreProps;
-    const bo = 2;
+    const bo = 1;
 
     if (!player1.turn && player1.points + 1 == bo) {
       return 1;
@@ -303,17 +304,46 @@ export default class GameScreen extends React.Component {
       <ScrollView style={styles.container}>
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent
           visible={showModal}
           onRequestClose={() => {
             Alert.alert("Modal has been closed.");
           }}
         >
-          <View style={{ marginTop: 22 }}>
-            {hasWinner && (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0, 0, 0, 0.4)"
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                height: Layout.window.height * 0.5,
+                width: Layout.window.width * 0.8,
+                backgroundColor: "#ff6100",
+                ...Platform.select({
+                  ios: {
+                    shadowColor: "black",
+                    shadowOffset: { height: -3 },
+                    shadowOpacity: 0.75,
+                    shadowRadius: 2
+                  },
+                  android: {
+                    elevation: 40
+                  }
+                })
+              }}
+            >
               <View>
-                <Text>{scoreProps[`player${hasWinner}`].name} Ganhou!</Text>
-
+                {hasWinner && (
+                  <Text>{scoreProps[`player${hasWinner}`].name} Ganhou!</Text>
+                )}
+              </View>
+              <View>
                 <TouchableHighlight
                   onPress={() => {
                     this.restartGame();
@@ -322,7 +352,7 @@ export default class GameScreen extends React.Component {
                   <Text>Restart the Game</Text>
                 </TouchableHighlight>
               </View>
-            )}
+            </View>
           </View>
         </Modal>
 
