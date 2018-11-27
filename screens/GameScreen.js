@@ -102,7 +102,7 @@ export default class GameScreen extends React.Component {
     this.setState({
       nodes: newNodes,
       paletteVisible: false,
-      remainingNodes: (remainingNodes -= 1)
+      remainingNodes: remainingNodes - 1
     });
 
     this._togglePlayerTurn();
@@ -124,7 +124,7 @@ export default class GameScreen extends React.Component {
 
     this.setState({
       nodes: newNodes,
-      remainingNodes: (remainingNodes += 1)
+      remainingNodes: remainingNodes + 1
     });
   };
 
