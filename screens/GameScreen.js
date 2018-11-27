@@ -242,7 +242,7 @@ export default class GameScreen extends React.Component {
 
   _willHaveAWinner = () => {
     const { player1, player2 } = this.state.scoreProps;
-    const bo = 1;
+    const bo = 2;
 
     if (!player1.turn && player1.points + 1 == bo) {
       return 1;
@@ -298,7 +298,7 @@ export default class GameScreen extends React.Component {
   };
 
   render() {
-    const { paletteColors } = this.props;
+    const { paletteColors, turnColor } = this.props;
     const { paletteVisible, scoreProps, showModal, hasWinner } = this.state;
     return (
       <ScrollView style={styles.container}>
@@ -324,7 +324,7 @@ export default class GameScreen extends React.Component {
                 alignItems: "center",
                 height: Layout.window.height * 0.5,
                 width: Layout.window.width * 0.8,
-                backgroundColor: "#ff6100",
+                backgroundColor: turnColor,
                 ...Platform.select({
                   ios: {
                     shadowColor: "black",
@@ -340,18 +340,43 @@ export default class GameScreen extends React.Component {
             >
               <View>
                 {hasWinner && (
-                  <Text>{scoreProps[`player${hasWinner}`].name} Ganhou!</Text>
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      color: "black",
+                      textAlign: "center"
+                    }}
+                  >
+                    {scoreProps[`player${hasWinner}`].name} Ganhou!
+                  </Text>
                 )}
               </View>
-              <View>
-                <TouchableHighlight
-                  onPress={() => {
-                    this.restartGame();
+              <TouchableHighlight
+                onPress={() => {
+                  this.restartGame();
+                }}
+              >
+                <View
+                  style={{
+                    marginTop: 20,
+                    width: 300,
+                    height: 100,
+                    backgroundColor: "white",
+                    justifyContent: "center",
+                    alignItems: "center"
                   }}
                 >
-                  <Text>Restart the Game</Text>
-                </TouchableHighlight>
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: "black",
+                      textAlign: "center"
+                    }}
+                  >
+                    Restart the Game
+                  </Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </Modal>
