@@ -76,7 +76,7 @@ export default class GameScreen extends React.Component {
       };
     });
 
-    this.setState({ newNodes });
+    this.setState({ nodes: newNodes });
   };
 
   static navigationOptions = {
@@ -85,10 +85,11 @@ export default class GameScreen extends React.Component {
 
   _onNodePress = label => {
     const { selectedColor, defaultColor } = this.props;
+    const { nodes, selectedNode } = this.state;
 
-    const newNodes = this.state.nodes.map(node => {
+    const newNodes = nodes.map(node => {
       if (node.label === label && !node.lock) {
-        const toggle = this.state.selectedNode == label ? undefined : label;
+        const toggle = selectedNode == label ? undefined : label;
         const color = toggle ? selectedColor : defaultColor;
 
         this.setState({
@@ -109,8 +110,10 @@ export default class GameScreen extends React.Component {
   };
 
   _colorSelect = color => {
-    const newNodes = this.state.nodes.map(node => {
-      if (node.label === this.state.selectedNode) {
+    const { nodes, selectedNode, remainingNodes } = this.state;
+
+    const newNodes = nodes.map(node => {
+      if (node.label === selectedNode) {
         return { ...node, color, lock: true };
       }
       return { ...node };
@@ -119,18 +122,20 @@ export default class GameScreen extends React.Component {
     this.setState({
       nodes: newNodes,
       paletteVisible: false,
-      remainingNodes: (this.state.remainingNodes -= 1)
+      remainingNodes: (remainingNodes -= 1)
     });
 
     this._togglePlayerTurn();
-    if (this.state.remainingNodes == 0) {
+    if (remainingNodes == 0) {
       this.givePoints();
     }
   };
 
   _cleanOneNode = label => {
     const { defaultColor } = this.props;
-    const newNodes = this.state.nodes.map(node => {
+    const { nodes, remainingNodes } = this.state;
+
+    const newNodes = nodes.map(node => {
       if (node.label === label) {
         return { ...node, color: defaultColor, lock: false };
       }
@@ -139,7 +144,7 @@ export default class GameScreen extends React.Component {
 
     this.setState({
       nodes: newNodes,
-      remainingNodes: (this.state.remainingNodes += 1)
+      remainingNodes: (remainingNodes += 1)
     });
   };
 
