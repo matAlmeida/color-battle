@@ -10,26 +10,6 @@ import Score from "../components/Score";
 // Api Wrapper
 import { getGraph } from "../wrappers/api";
 
-GameScreen.propTypes = {
-  defaultColor: PropTypes.string,
-  paletteColors: PropTypes.arrayOf(PropTypes.string),
-  selectedColor: PropTypes.string,
-  turnColor: PropTypes.string,
-  idleColor: PropTypes.string,
-  player1Name: PropTypes.string,
-  player2Name: PropTypes.string
-};
-
-GameScreen.defaultProps = {
-  defaultColor: "#e1e1e1",
-  paletteColors: ["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"],
-  selectedColor: "#919191",
-  turnColor: "#42f4c8",
-  idleColor: "#f2f2f2",
-  player1Name: "Matheus",
-  player2Name: "Ícaro"
-};
-
 export default class GameScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -298,3 +278,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   }
 });
+
+GameScreen.propTypes = {
+  defaultColor: PropTypes.string,
+  paletteColors: PropTypes.arrayOf(PropTypes.string),
+  selectedColor: PropTypes.string,
+  turnColor: PropTypes.string,
+  idleColor: PropTypes.string,
+  player1Name: PropTypes.string,
+  player2Name: PropTypes.string
+};
+
+GameScreen.defaultProps = {
+  defaultColor: "#e1e1e1",
+  paletteColors: ["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"],
+  selectedColor: "#919191",
+  turnColor: "#42f4c8",
+  idleColor: "#f2f2f2",
+  player1Name: "Matheus",
+  player2Name: "Ícaro"
+};
