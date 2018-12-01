@@ -49,3 +49,21 @@ export const getGraph = id => {
 
   return mainGraph;
 };
+
+export const getLinks = graph => {
+  const links = graph.reduce((agg, node) => {
+    const datLinks = node.links.reduce(
+      (agg2, link) => {
+        agg2[node.label] = [...agg2[node.label], link];
+        agg2[link] = [...agg2[link], node.label];
+
+        return agg2;
+      },
+      { ...agg }
+    );
+
+    return datLinks;
+  }, {});
+
+  return links;
+};
