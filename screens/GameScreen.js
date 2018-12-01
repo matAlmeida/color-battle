@@ -15,7 +15,7 @@ import Layout from "../constants/Layout";
 import Score from "../components/Score";
 
 // Api Wrapper
-import { getGraph } from "../wrappers/api";
+import { getGraph, getLinks } from "../wrappers/api";
 
 export default class GameScreen extends React.Component {
   constructor(props) {
@@ -47,8 +47,7 @@ export default class GameScreen extends React.Component {
         },
         turnColor,
         idleColor
-      },
-      remainingNodes: 9
+      }
     };
   }
 
@@ -56,6 +55,7 @@ export default class GameScreen extends React.Component {
     const { defaultColor, paletteColors } = this.props;
 
     const nodes = getGraph();
+    const checkLinks = getLinks(nodes);
 
     const newNodes = nodes.map(node => {
       return {
@@ -65,7 +65,7 @@ export default class GameScreen extends React.Component {
       };
     });
 
-    this.setState({ nodes: newNodes });
+    this.setState({ nodes: newNodes, remainingNodes: nodes.length });
   };
 
   static navigationOptions = {
@@ -237,7 +237,7 @@ export default class GameScreen extends React.Component {
       return { ...node, color: "#e1e1e1", lock: false };
     });
 
-    this.setState({ nodes: reseted, remainingNodes: 9 });
+    this.setState({ nodes: reseted, remainingNodes: reseted.length });
   }
 
   _willHaveAWinner = () => {
@@ -298,7 +298,7 @@ export default class GameScreen extends React.Component {
   };
 
   render() {
-    const { paletteColors, turnColor } = this.props;
+    const { paletteColors } = this.props;
     const { paletteVisible, scoreProps, showModal, hasWinner } = this.state;
     return (
       <ScrollView style={styles.container}>
