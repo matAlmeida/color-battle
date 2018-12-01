@@ -50,6 +50,11 @@ export const getGraph = id => {
   return mainGraph;
 };
 
+/**
+ *
+ * @param {array} graph
+ * @returns {object} object with the links
+ */
 export const getLinks = graph => {
   const links = graph.reduce((agg, node) => {
     const datLinks = node.links.reduce(
