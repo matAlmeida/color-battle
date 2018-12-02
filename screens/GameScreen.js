@@ -231,7 +231,7 @@ export default class GameScreen extends React.Component {
           stroke={selectedColor}
           fill={node.color}
           onPressIn={() => this._onNodePress(node.label)}
-          onLongPress={() => this._cleanOneNode(node.label)}
+          // onLongPress={() => this._cleanOneNode(node.label)}
         />
       );
     });
