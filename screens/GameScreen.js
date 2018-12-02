@@ -144,8 +144,6 @@ export default class GameScreen extends React.Component {
       return { ...node };
     });
 
-    console.log(thatNodes - 1);
-
     this.setState({
       nodes: newNodes,
       paletteVisible: false,
