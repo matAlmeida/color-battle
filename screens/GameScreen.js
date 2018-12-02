@@ -113,16 +113,18 @@ export default class GameScreen extends React.Component {
 
     let withoutcolor = nodes.sort((a, b) => (a.label > b.label ? 1 : -1));
 
-    toRemove.map(link => {
-      const idx = link - 1;
+    if (!this.props.freestyle) {
+      toRemove.map(link => {
+        const idx = link - 1;
+        withoutcolor[idx].paletteColors = withoutcolor[
+          idx
+        ].paletteColors.filter(c => c != color);
+      });
+      const idx = selectedNode - 1;
       withoutcolor[idx].paletteColors = withoutcolor[idx].paletteColors.filter(
         c => c != color
       );
-    });
-    const idx = selectedNode - 1;
-    withoutcolor[idx].paletteColors = withoutcolor[idx].paletteColors.filter(
-      c => c != color
-    );
+    }
 
     const newNodes = withoutcolor.map(node => {
       if (node.label === selectedNode) {
@@ -452,7 +454,8 @@ GameScreen.propTypes = {
   turnColor: PropTypes.string,
   idleColor: PropTypes.string,
   player1Name: PropTypes.string,
-  player2Name: PropTypes.string
+  player2Name: PropTypes.string,
+  freestyle: PropTypes.bool
 };
 
 GameScreen.defaultProps = {
@@ -463,5 +466,6 @@ GameScreen.defaultProps = {
   turnColor: "#42f4c8",
   idleColor: "#f2f2f2",
   player1Name: "Matheus",
-  player2Name: "Ícaro"
+  player2Name: "Ícaro",
+  freestyle: false
 };
