@@ -20,7 +20,13 @@ import { getGraph, getLinks } from "../wrappers/api";
 export default class GameScreen extends React.Component {
   constructor(props) {
     super(props);
-    const { turnColor, idleColor, player1Name, player2Name } = props;
+    const {
+      turnColor,
+      idleColor,
+      player1Name,
+      player2Name,
+      paletteColors
+    } = props;
 
     const whoStart =
       parseInt(
@@ -30,6 +36,7 @@ export default class GameScreen extends React.Component {
       ) % 2;
 
     this.state = {
+      selectedPalette: paletteColors,
       hasWinner: 0, // 0 - no, 1 - player1, 2 - player2
       showModal: false,
       paletteVisible: false,
@@ -54,8 +61,8 @@ export default class GameScreen extends React.Component {
   componentWillMount = () => {
     const { defaultColor, paletteColors } = this.props;
 
+    // .sort((a, b) => (a.label > b.label ? 1 : -1))
     const nodes = getGraph();
-    const checkLinks = getLinks(nodes);
 
     const newNodes = nodes.map(node => {
       return {
@@ -83,6 +90,7 @@ export default class GameScreen extends React.Component {
 
         this.setState({
           selectedNode: toggle,
+          selectedPalette: node.paletteColors,
           paletteVisible: toggle ? true : false
         });
 
@@ -100,10 +108,29 @@ export default class GameScreen extends React.Component {
 
   _colorSelect = color => {
     const { nodes, selectedNode, remainingNodes } = this.state;
+    const links = getLinks(nodes);
+    const toRemove = links[selectedNode];
 
-    const newNodes = nodes.map(node => {
+    let withoutcolor = nodes.sort((a, b) => (a.label > b.label ? 1 : -1));
+
+    toRemove.map(link => {
+      const idx = link - 1;
+      withoutcolor[idx].paletteColors = withoutcolor[idx].paletteColors.filter(
+        c => c != color
+      );
+    });
+    const idx = selectedNode - 1;
+    withoutcolor[idx].paletteColors = withoutcolor[idx].paletteColors.filter(
+      c => c != color
+    );
+
+    const newNodes = withoutcolor.map(node => {
       if (node.label === selectedNode) {
         return { ...node, color, lock: true };
+      } else {
+        if (node.paletteColors.length == 0) {
+          return { ...node, lock: true };
+        }
       }
       return { ...node };
     });
@@ -234,7 +261,12 @@ export default class GameScreen extends React.Component {
 
   resetColor() {
     const reseted = this.state.nodes.map(node => {
-      return { ...node, color: "#e1e1e1", lock: false };
+      return {
+        ...node,
+        color: "#e1e1e1",
+        lock: false,
+        paletteColors: this.props.paletteColors
+      };
     });
 
     this.setState({ nodes: reseted, remainingNodes: reseted.length });
@@ -298,8 +330,13 @@ export default class GameScreen extends React.Component {
   };
 
   render() {
-    const { paletteColors } = this.props;
-    const { paletteVisible, scoreProps, showModal, hasWinner } = this.state;
+    const {
+      paletteVisible,
+      scoreProps,
+      showModal,
+      hasWinner,
+      selectedPalette
+    } = this.state;
     return (
       <ScrollView style={styles.container}>
         <Modal
@@ -342,8 +379,7 @@ export default class GameScreen extends React.Component {
         {paletteVisible && (
           <ColorPalette
             onChange={this._colorSelect}
-            defaultColor={paletteColors[0]}
-            colors={paletteColors}
+            colors={selectedPalette}
             title={"-"}
             icon={
               <Icon.Ionicons
@@ -421,7 +457,8 @@ GameScreen.propTypes = {
 
 GameScreen.defaultProps = {
   defaultColor: "#e1e1e1",
-  paletteColors: ["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"],
+  paletteColors: ["#E74C3C", "#9B59B6", "#2980B9"],
+  paletteColors4: ["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"],
   selectedColor: "#919191",
   turnColor: "#42f4c8",
   idleColor: "#f2f2f2",
