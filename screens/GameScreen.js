@@ -111,6 +111,7 @@ export default class GameScreen extends React.Component {
     const links = getLinks(nodes);
     const toRemove = links[selectedNode];
 
+    let thatNodes = remainingNodes;
     let withoutcolor = nodes.sort((a, b) => (a.label > b.label ? 1 : -1));
 
     if (!this.props.freestyle) {
@@ -119,6 +120,12 @@ export default class GameScreen extends React.Component {
         withoutcolor[idx].paletteColors = withoutcolor[
           idx
         ].paletteColors.filter(c => c != color);
+        if (
+          withoutcolor[idx].paletteColors.length == 0 &&
+          !withoutcolor[idx].lock
+        ) {
+          thatNodes -= 1;
+        }
       });
       const idx = selectedNode - 1;
       withoutcolor[idx].paletteColors = withoutcolor[idx].paletteColors.filter(
@@ -137,14 +144,16 @@ export default class GameScreen extends React.Component {
       return { ...node };
     });
 
+    console.log(thatNodes - 1);
+
     this.setState({
       nodes: newNodes,
       paletteVisible: false,
-      remainingNodes: remainingNodes - 1
+      remainingNodes: thatNodes - 1
     });
 
     this._togglePlayerTurn();
-    if (remainingNodes - 1 == 0) {
+    if (thatNodes - 1 == 0) {
       this.givePoints();
     }
   };
