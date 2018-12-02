@@ -55,19 +55,48 @@ export const getGraph = id => {
  * @param {array} graph
  * @returns {object} object with the links
  */
+
+/**
+ * [{
+ *  label: 1,
+ *  links: [2, 3]
+ * },{
+ *  label: 2,
+ *  links: [3]
+ * },{
+ *  label: 3,
+ *  links: []
+ * }]
+ */
+
+/**
+ * {}
+ * {
+ *
+ * }
+ */
+
 export const getLinks = graph => {
   const links = graph.reduce((agg, node) => {
-    const datLinks = node.links.reduce(
-      (agg2, link) => {
-        agg2[node.label] = [...agg2[node.label], link];
-        agg2[link] = [...agg2[link], node.label];
+    node.links.map(link => {
+      if (agg[node.label]) {
+        agg[node.label] = [...agg[node.label], link];
+        if (agg[link]) {
+          agg[link] = [...agg[link], node.label];
+        } else {
+          agg[link] = [node.label];
+        }
+      } else {
+        agg[node.label] = [link];
+        if (agg[link]) {
+          agg[link] = [...agg[link], node.label];
+        } else {
+          agg[link] = [node.label];
+        }
+      }
+    });
 
-        return agg2;
-      },
-      { ...agg }
-    );
-
-    return datLinks;
+    return { ...agg };
   }, {});
 
   return links;
