@@ -55,7 +55,7 @@ class SettingsScreen extends React.Component {
             <Text style={styles.header}>Jogar no modo Livre?</Text>
             <Switch
               style={styles.switch}
-              onChangeText={freestyle => changeStyle(freestyle)}
+              onValueChange={freestyle => changeStyle(freestyle)}
               value={settings.freestyle}
             />
           </View>
@@ -63,7 +63,7 @@ class SettingsScreen extends React.Component {
             <Text style={styles.header}>Jogar com 4 cores?</Text>
             <Switch
               style={styles.switch}
-              onChangeText={fourcolors => changeColors(fourcolors)}
+              onValueChange={fourcolors => changeColors(fourcolors)}
               value={settings.fourcolors}
             />
           </View>
