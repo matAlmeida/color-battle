@@ -25,7 +25,6 @@ class GameScreen extends React.Component {
   constructor(props) {
     super(props);
     const { turnColor, idleColor, settings } = props;
-
     const whoStart =
       parseInt(
         Math.random()
@@ -76,12 +75,16 @@ class GameScreen extends React.Component {
   whatTheColor = () => {
     const { paletteColors, paletteColors4, settings } = this.props;
 
-    return settings.fourcolors ? paletteColors : paletteColors4;
+    return settings.fourcolors ? paletteColors4 : paletteColors;
   };
 
   static navigationOptions = {
     title: "Color Battle"
   };
+
+  _willFocus = this.props.navigation.addListener("willFocus", () =>
+    this.restartGame()
+  );
 
   _onNodePress = label => {
     const { selectedColor, defaultColor } = this.props;
@@ -345,11 +348,21 @@ class GameScreen extends React.Component {
   render() {
     const {
       paletteVisible,
-      scoreProps,
       showModal,
       hasWinner,
       selectedPalette
     } = this.state;
+
+    const p1 = {
+      ...this.state.scoreProps.player1,
+      name: this.props.settings.player1
+    };
+    const p2 = {
+      ...this.state.scoreProps.player2,
+      name: this.props.settings.player2
+    };
+    const score = { ...this.state.scoreProps, player1: p1, player2: p2 };
+
     return (
       <ScrollView style={styles.container}>
         <Modal
@@ -365,7 +378,7 @@ class GameScreen extends React.Component {
               <View>
                 {hasWinner && (
                   <Text style={styles.modalText1}>
-                    {scoreProps[`player${hasWinner}`].name} Ganhou!
+                    {score[`player${hasWinner}`].name} Ganhou!
                   </Text>
                 )}
               </View>
@@ -388,7 +401,7 @@ class GameScreen extends React.Component {
             {this.renderNodes()}
           </Svg>
         </View>
-        {!paletteVisible && <Score {...scoreProps} />}
+        {!paletteVisible && <Score {...score} />}
         {paletteVisible && (
           <ColorPalette
             onChange={this._colorSelect}
