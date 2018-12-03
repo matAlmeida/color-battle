@@ -4,6 +4,24 @@
 
 # color-battle
 
-An Android application of the game "Color Battle"
+An React Native application of the game "Color Battle"
 
-The game is simple. You and your mate must color the Nodes of a Graph. The major rule is that you can't color a Node if this is connected to another Node with the same color. Initialy we are planning to make the game with the option to play with 3 or 4 colors.
+The game is simple. You and your mate must color the Nodes of a Graph.  
+The major rule is that you can't color a Node if this is connected to another Node with the same color.  
+You can play the game with 3 or 4 colors
+
+# Using
+
+```sh
+$ git clone https://github.com/matAlmeida/color-battle
+$ cd color-battle
+$ npm i -g expo-cli
+$ npm i
+$ npm start #Or you can run: expo start
+```
+
+# Deploy
+
+```sh
+$ expo build:android
+```
