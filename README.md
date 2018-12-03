@@ -10,7 +10,7 @@ The game is simple. You and your mate must color the Nodes of a Graph.
 The major rule is that you can't color a Node if this is connected to another Node with the same color.  
 You can play the game with 3 or 4 colors
 
-# Using
+# Developing
 
 ```sh
 $ git clone https://github.com/matAlmeida/color-battle
