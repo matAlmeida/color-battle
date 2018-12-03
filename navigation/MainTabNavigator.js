@@ -47,7 +47,7 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: "Settings",
+  tabBarLabel: "Configurações",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
