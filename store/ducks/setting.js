@@ -7,8 +7,6 @@ export const { Types, Creators } = createActions({
   changeColors: ["fourcolors"]
 });
 
-console.log(Types);
-
 const INITIAL_STATE = {
   player1: "Jogador A",
   player2: "Jogador B",
