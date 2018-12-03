@@ -9,20 +9,23 @@ import {
   TextInput,
   Switch
 } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Creators as SettingsActions } from "../store/ducks/setting";
 
-export default class SettingsScreen extends React.Component {
-  state = {
-    player1: "Matheus",
-    player2: "Icaro",
-    freestyle: false,
-    fourcolors: false
-  };
-
+class SettingsScreen extends React.Component {
   static navigationOptions = {
     title: "Configurações"
   };
 
   render() {
+    const {
+      settings,
+      changePlayer1,
+      changePlayer2,
+      changeStyle,
+      changeColors
+    } = this.props;
     return (
       <ScrollView style={styles.container}>
         <View style={styles.mainContainer}>
@@ -30,8 +33,8 @@ export default class SettingsScreen extends React.Component {
             <Text style={styles.header}>Jogador 1:</Text>
             <TextInput
               style={styles.input}
-              onChangeText={player1 => this.setState({ player1 })}
-              value={this.state.player1}
+              onChangeText={name => changePlayer1(name)}
+              value={settings.player1}
               placeholder={this.props.placeholderTextPlayer}
               placeholderTextColor="#e2e2e2"
               underlineColorAndroid="transparent"
@@ -41,8 +44,8 @@ export default class SettingsScreen extends React.Component {
             <Text style={styles.header}>Jogador 2:</Text>
             <TextInput
               style={styles.input}
-              onChangeText={player2 => this.setState({ player2 })}
-              value={this.state.player2}
+              onChangeText={name => changePlayer2(name)}
+              value={settings.player2}
               placeholder={this.props.placeholderTextPlayer}
               placeholderTextColor="#e2e2e2"
               underlineColorAndroid="transparent"
@@ -52,16 +55,16 @@ export default class SettingsScreen extends React.Component {
             <Text style={styles.header}>Jogar no modo Livre?</Text>
             <Switch
               style={styles.switch}
-              onValueChange={freestyle => this.setState({ freestyle })}
-              value={this.state.freestyle}
+              onChangeText={freestyle => changeStyle(freestyle)}
+              value={settings.freestyle}
             />
           </View>
           <View>
             <Text style={styles.header}>Jogar com 4 cores?</Text>
             <Switch
               style={styles.switch}
-              onValueChange={fourcolors => this.setState({ fourcolors })}
-              value={this.state.fourcolors}
+              onChangeText={fourcolors => changeColors(fourcolors)}
+              value={settings.fourcolors}
             />
           </View>
 
@@ -75,6 +78,18 @@ export default class SettingsScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  settings: state.settings
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SettingsActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SettingsScreen);
 
 const styles = StyleSheet.create({
   container: {

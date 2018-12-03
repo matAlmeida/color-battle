@@ -9,6 +9,10 @@ import {
   Text,
   Platform
 } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Creators as SettingsActions } from "../store/ducks/setting";
+
 import { Svg, Icon } from "expo";
 import ColorPalette from "react-native-color-palette";
 import Layout from "../constants/Layout";
@@ -17,16 +21,10 @@ import Score from "../components/Score";
 // Api Wrapper
 import { getGraph, getLinks } from "../wrappers/api";
 
-export default class GameScreen extends React.Component {
+class GameScreen extends React.Component {
   constructor(props) {
     super(props);
-    const {
-      turnColor,
-      idleColor,
-      player1Name,
-      player2Name,
-      paletteColors
-    } = props;
+    const { turnColor, idleColor, settings } = props;
 
     const whoStart =
       parseInt(
@@ -36,7 +34,7 @@ export default class GameScreen extends React.Component {
       ) % 2;
 
     this.state = {
-      selectedPalette: paletteColors,
+      selectedPalette: this.whatTheColor(),
       hasWinner: 0, // 0 - no, 1 - player1, 2 - player2
       showModal: false,
       paletteVisible: false,
@@ -45,12 +43,12 @@ export default class GameScreen extends React.Component {
         player1: {
           points: 0,
           turn: whoStart == 0,
-          name: player1Name
+          name: settings.player1
         },
         player2: {
           points: 0,
           turn: whoStart == 1,
-          name: player2Name
+          name: settings.player2
         },
         turnColor,
         idleColor
@@ -59,7 +57,7 @@ export default class GameScreen extends React.Component {
   }
 
   componentWillMount = () => {
-    const { defaultColor, paletteColors } = this.props;
+    const { defaultColor } = this.props;
 
     // .sort((a, b) => (a.label > b.label ? 1 : -1))
     const nodes = getGraph();
@@ -68,11 +66,17 @@ export default class GameScreen extends React.Component {
       return {
         ...node,
         color: defaultColor,
-        paletteColors: paletteColors
+        paletteColors: this.whatTheColor()
       };
     });
 
     this.setState({ nodes: newNodes, remainingNodes: nodes.length });
+  };
+
+  whatTheColor = () => {
+    const { paletteColors, paletteColors4, settings } = this.props;
+
+    return settings.fourcolors ? paletteColors : paletteColors4;
   };
 
   static navigationOptions = {
@@ -114,7 +118,7 @@ export default class GameScreen extends React.Component {
     let thatNodes = remainingNodes;
     let withoutcolor = nodes.sort((a, b) => (a.label > b.label ? 1 : -1));
 
-    if (!this.props.freestyle) {
+    if (!this.props.settings.freestyle) {
       toRemove.map(link => {
         const idx = link - 1;
         withoutcolor[idx].paletteColors = withoutcolor[
@@ -274,7 +278,7 @@ export default class GameScreen extends React.Component {
         ...node,
         color: "#e1e1e1",
         lock: false,
-        paletteColors: this.props.paletteColors
+        paletteColors: this.whatTheColor()
       };
     });
 
@@ -404,6 +408,18 @@ export default class GameScreen extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  settings: state.settings
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SettingsActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GameScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -461,8 +477,7 @@ GameScreen.propTypes = {
   turnColor: PropTypes.string,
   idleColor: PropTypes.string,
   player1Name: PropTypes.string,
-  player2Name: PropTypes.string,
-  freestyle: PropTypes.bool
+  player2Name: PropTypes.string
 };
 
 GameScreen.defaultProps = {
@@ -471,8 +486,5 @@ GameScreen.defaultProps = {
   paletteColors4: ["#E74C3C", "#9B59B6", "#2980B9", "#FFFF00"],
   selectedColor: "#919191",
   turnColor: "#42f4c8",
-  idleColor: "#f2f2f2",
-  player1Name: "Matheus",
-  player2Name: "Ícaro",
-  freestyle: false
+  idleColor: "#f2f2f2"
 };
