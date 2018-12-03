@@ -10,8 +10,8 @@ export const { Types, Creators } = createActions({
 console.log(Types);
 
 const INITIAL_STATE = {
-  player1: "Matheus",
-  player2: "Gabriel",
+  player1: "Jogador A",
+  player2: "Jogador B",
   freestyle: false,
   fourcolors: false
 };
