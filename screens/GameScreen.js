@@ -5,7 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Modal,
-  TouchableHighlight,
+  TouchableOpacity,
   Text,
   Platform
 } from "react-native";
@@ -365,7 +365,7 @@ export default class GameScreen extends React.Component {
                   </Text>
                 )}
               </View>
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={() => {
                   this.restartGame();
                 }}
@@ -373,7 +373,7 @@ export default class GameScreen extends React.Component {
                 <View style={styles.modalButtonContainer}>
                   <Text style={styles.modalButtonText}>Recomeçar Jogo</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
