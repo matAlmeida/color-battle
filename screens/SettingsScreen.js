@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   Text,
   TextInput,
   Switch
@@ -67,12 +66,6 @@ class SettingsScreen extends React.Component {
               value={settings.fourcolors}
             />
           </View>
-
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => {}}>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>Salvar</Text>
-            </View>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     );
@@ -114,24 +107,6 @@ const styles = StyleSheet.create({
   },
   switch: {
     marginTop: -25
-  },
-  button: {
-    marginTop: 20,
-    width: 300,
-    height: 100,
-    backgroundColor: "#42f4c8",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  buttonText: {
-    fontSize: 20,
-    color: "black",
-    textAlign: "center"
-  },
-  buttonContainer: {
-    marginTop: 40,
-    justifyContent: "center",
-    alignItems: "center"
   }
 });
 
