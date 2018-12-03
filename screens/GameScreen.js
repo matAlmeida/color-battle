@@ -371,7 +371,7 @@ export default class GameScreen extends React.Component {
                 }}
               >
                 <View style={styles.modalButtonContainer}>
-                  <Text style={styles.modalButtonText}>Restart the Game</Text>
+                  <Text style={styles.modalButtonText}>Recomeçar Jogo</Text>
                 </View>
               </TouchableHighlight>
             </View>
