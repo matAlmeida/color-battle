@@ -24,4 +24,5 @@ $ npm start #Or you can run: expo start
 
 ```sh
 $ expo build:android
+$ adb install <colorbattle-*>.apk
 ```
