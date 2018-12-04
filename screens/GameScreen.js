@@ -56,10 +56,10 @@ class GameScreen extends React.Component {
   }
 
   componentWillMount = () => {
-    const { defaultColor } = this.props;
+    const { defaultColor, settings } = this.props;
 
     // .sort((a, b) => (a.label > b.label ? 1 : -1))
-    const nodes = getGraph();
+    const nodes = getGraph(settings.graphId);
 
     const newNodes = nodes.map(node => {
       return {
