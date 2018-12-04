@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Switch
+  Switch,
+  Picker
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -23,7 +24,8 @@ class SettingsScreen extends React.Component {
       changePlayer1,
       changePlayer2,
       changeStyle,
-      changeColors
+      changeColors,
+      changeGraph
     } = this.props;
     return (
       <ScrollView style={styles.container}>
@@ -65,6 +67,18 @@ class SettingsScreen extends React.Component {
               onValueChange={fourcolors => changeColors(fourcolors)}
               value={settings.fourcolors}
             />
+          </View>
+          <View>
+            <Text style={styles.header}>Escolha o Grafo</Text>
+            <Picker
+              selectedValue={settings.graphId}
+              style={{ height: 50, width: 100 }}
+              onValueChange={graphId => changeGraph(graphId)}
+            >
+              <Picker.Item label="Básico 1" value={1} />
+              <Picker.Item label="Básico 2" value={2} />
+              <Picker.Item label="Grande 1" value={3} />
+            </Picker>
           </View>
         </View>
       </ScrollView>

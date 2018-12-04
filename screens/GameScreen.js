@@ -357,10 +357,12 @@ class GameScreen extends React.Component {
       ...this.state.scoreProps.player1,
       name: this.props.settings.player1
     };
+
     const p2 = {
       ...this.state.scoreProps.player2,
       name: this.props.settings.player2
     };
+
     const score = { ...this.state.scoreProps, player1: p1, player2: p2 };
 
     return (
