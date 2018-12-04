@@ -50,32 +50,6 @@ export const getGraph = id => {
   return mainGraph;
 };
 
-/**
- *
- * @param {array} graph
- * @returns {object} object with the links
- */
-
-/**
- * [{
- *  label: 1,
- *  links: [2, 3]
- * },{
- *  label: 2,
- *  links: [3]
- * },{
- *  label: 3,
- *  links: []
- * }]
- */
-
-/**
- * {}
- * {
- *
- * }
- */
-
 export const getLinks = graph => {
   const links = graph.reduce((agg, node) => {
     node.links.map(link => {
