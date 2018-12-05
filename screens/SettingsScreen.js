@@ -78,6 +78,7 @@ class SettingsScreen extends React.Component {
               <Picker.Item label="Básico 1" value={1} />
               <Picker.Item label="Básico 2" value={2} />
               <Picker.Item label="Grande 1" value={3} />
+              <Picker.Item label="Grande 2" value={4} />
             </Picker>
           </View>
         </View>
