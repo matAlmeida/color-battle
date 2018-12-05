@@ -1,4 +1,4 @@
-import { basic1, basic2, basic3 } from "./graphs";
+import { basic1, basic2, basic3, basic4 } from "./graphs";
 
 export const getGraph = (id = 1) => {
   switch (id) {
@@ -8,6 +8,8 @@ export const getGraph = (id = 1) => {
       return basic2;
     case 3:
       return basic3;
+    case 4:
+      return basic4;
     default:
       return [];
   }
