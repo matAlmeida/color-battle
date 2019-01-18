@@ -2,11 +2,19 @@ import { Localization } from "expo";
 import i18n from "i18n-js";
 
 const en = {
-  newAccount: "Create a new account"
+  newAccount: "Create a new account",
+  email: "Email",
+  emailInputPlaceholder: "your email",
+  password: "Password",
+  passwordInputPlaceholder: "your password"
 };
 
 const pt = {
-  newAccount: "Criar uma nova conta"
+  newAccount: "Criar uma nova conta",
+  email: "Email",
+  emailInputPlaceholder: "seu email",
+  password: "Senha",
+  passwordInputPlaceholder: "sua senha"
 };
 
 const translations = { en, pt };

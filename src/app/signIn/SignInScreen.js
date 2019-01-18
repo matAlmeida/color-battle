@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { LinearGradient } from "expo";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import Layout from "@constants/Layout";
 import i18n from "@constants/i18n";
-import { Container } from "@common";
+import { Container, TextInput } from "@common";
 
 export default class SignInScreen extends Component {
   static navigationOptions = {
@@ -32,7 +34,44 @@ export default class SignInScreen extends Component {
           <Text style={styles.titleText}>color battle</Text>
         </View>
         <View style={styles.contentConteiner}>
-          <Text>Oi</Text>
+          <Formik
+            ref={form => (this.form = form)}
+            initialValues={{
+              email: "",
+              password: "senha123"
+            }}
+            validationSchema={Yup.object().shape({
+              email: Yup.string()
+                .email()
+                .required(),
+              password: Yup.string()
+                .min(8)
+                .required()
+            })}
+            render={({ values, setFieldValue, setFieldTouched }) => {
+              return (
+                <React.Fragment>
+                  <TextInput
+                    name="email"
+                    label={i18n.t("email")}
+                    onChange={setFieldValue}
+                    onTouch={setFieldTouched}
+                    value={values.email}
+                    placeholder={i18n.t("emailInputPlaceholder")}
+                  />
+                  <TextInput
+                    name="password"
+                    label={i18n.t("password")}
+                    onChange={setFieldValue}
+                    onTouch={setFieldTouched}
+                    value={values.password}
+                    placeholder={i18n.t("passwordInputPlaceholder")}
+                    secureTextEntry
+                  />
+                </React.Fragment>
+              );
+            }}
+          />
         </View>
         <TouchableHighlight
           style={styles.newAccountButton}

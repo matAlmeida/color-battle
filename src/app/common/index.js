@@ -1,5 +1,4 @@
-import Container from './Container';
+import Container from "./Container";
+import TextInput from "./TextInput";
 
-export {
-  Container
-}
+export { Container, TextInput };
