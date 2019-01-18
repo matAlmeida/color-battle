@@ -8,9 +8,9 @@
     "platforms": ["ios", "android"],
     "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./src/assets/images/icon-color-battle.png",
     "splash": {
-      "image": "./src/assets/images/splash.png",
+      "image": "./src/assets/images/splash-color-battle.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

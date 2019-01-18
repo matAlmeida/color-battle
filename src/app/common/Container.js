@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet, Platform } from "react-native";
 
-export default function Container({ children, ...rest }) {
+export default function Container({ children, style = {}, ...rest }) {
   return (
-    <View style={styles.container} {...rest}>
+    <View style={[styles.container, style]} {...rest}>
       {children}
     </View>
   );
