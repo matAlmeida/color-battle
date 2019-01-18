@@ -1,12 +1,7 @@
-import React, { Component } from "react";
-import { View, Text } from "react-native";
+import React from "react";
 
-export default class App extends Component {
-  render() {
-    return (
-      <View>
-        <Text>OI</Text>
-      </View>
-    );
-  }
-}
+import Router from "./router";
+
+const App = () => <Router />;
+
+export default App;
