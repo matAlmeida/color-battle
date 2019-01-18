@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
+  "path-intellisense.mappings": {
+    "@app": "${workspaceRoot}/src/app",
+    "@assets": "${workspaceRoot}/src/assets",
+    "@common": "${workspaceRoot}/src/app/common",
+    "@constants": "${workspaceRoot}/src/constants",
+    "@services": "${workspaceRoot}/src/services",
+    "@store": "${workspaceRoot}/src/app/store"
+  }
+}
