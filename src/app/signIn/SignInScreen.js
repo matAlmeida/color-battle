@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { LinearGradient } from "expo";
 
 import Layout from "@constants/Layout";
+import i18n from "@constants/i18n";
 import { Container } from "@common";
 
 export default class SignInScreen extends Component {
@@ -37,7 +38,7 @@ export default class SignInScreen extends Component {
           style={styles.newAccountButton}
           onPress={() => console.log("Criar nova conta")}
         >
-          <Text style={styles.newAccountText}>Criar conta com email</Text>
+          <Text style={styles.newAccountText}>{i18n.t("newAccount")}</Text>
         </TouchableHighlight>
       </Container>
     );
