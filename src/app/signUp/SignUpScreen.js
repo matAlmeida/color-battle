@@ -36,22 +36,30 @@ export default class SignUpScreen extends Component {
           end={[0, 1]}
         />
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>criar nova conta</Text>
+          <Text style={styles.titleText}>
+            {i18n.t("screenTitle.newAccount")}
+          </Text>
         </View>
         <View style={styles.contentConteiner}>
           <Formik
             ref={form => (this.form = form)}
             initialValues={{
+              fullName: "",
               email: "",
-              password: "senha123"
+              password: "",
+              confirmedPassword: ""
             }}
             validationSchema={Yup.object().shape({
+              fullName: Yup.string().required(i18n.t("error.requiredInput")),
               email: Yup.string()
-                .email()
-                .required(),
+                .email(i18n.t("error.emailInvalid"))
+                .required(i18n.t("error.requiredInput")),
               password: Yup.string()
-                .min(8)
-                .required()
+                .min(8, i18n.t("error.passwordMinCharacters"))
+                .required(i18n.t("error.requiredInput")),
+              confirmedPassword: Yup.string()
+                .oneOf([Yup.ref("password", null)])
+                .required(i18n.t("error.requiredInput"))
             })}
             onSubmit={this._handleSubmit}
             render={({
@@ -65,28 +73,47 @@ export default class SignUpScreen extends Component {
               return (
                 <React.Fragment>
                   <TextInput
+                    name="fullName"
+                    label={i18n.t("inputLabel.fullName")}
+                    onChange={setFieldValue}
+                    onTouch={setFieldTouched}
+                    value={values.fullName}
+                    placeholder={i18n.t("placeholder.fullNameInput")}
+                    autoCapitalize="none"
+                  />
+                  <TextInput
                     name="email"
-                    label={i18n.t("email")}
+                    label={i18n.t("inputLabel.email")}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
                     value={values.email}
-                    placeholder={i18n.t("emailInputPlaceholder")}
+                    placeholder={i18n.t("placeholder.emailInput")}
                     autoCapitalize="none"
                   />
                   <TextInput
                     name="password"
-                    label={i18n.t("password")}
+                    label={i18n.t("inputLabel.password")}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
                     value={values.password}
-                    placeholder={i18n.t("passwordInputPlaceholder")}
+                    placeholder={i18n.t("placeholder.passwordInput")}
+                    autoCapitalize="none"
+                    secureTextEntry
+                  />
+                  <TextInput
+                    name="confirmedPassword"
+                    label={i18n.t("inputLabel.confirmedPassword")}
+                    onChange={setFieldValue}
+                    onTouch={setFieldTouched}
+                    value={values.confirmedPassword}
+                    placeholder={i18n.t("placeholder.confirmedPasswordInput")}
                     autoCapitalize="none"
                     secureTextEntry
                   />
                   <Button
                     onPress={handleSubmit}
                     loading={isSubmitting}
-                    title={i18n.t("signInButton")}
+                    title={i18n.t("buttonLabel.signUp")}
                     buttonStyle={styles.buttonStyle}
                     titleStyle={styles.buttonTitleStyle}
                     containerStyle={styles.buttonContainerStyle}

@@ -58,11 +58,11 @@ export default class SignInScreen extends Component {
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
-                .email(i18n.t("emailInvalid"))
-                .required(i18n.t("requiredInput")),
+                .email(i18n.t("error.emailInvalid"))
+                .required(i18n.t("error.requiredInput")),
               password: Yup.string()
-                .min(8, i18n.t("passwordMinCharacters"))
-                .required(i18n.t("requiredInput"))
+                .min(8, i18n.t("error.passwordMinCharacters"))
+                .required(i18n.t("rerror.equiredInput"))
             })}
             onSubmit={this._handleSignIn}
             render={({
@@ -79,21 +79,21 @@ export default class SignInScreen extends Component {
                 <React.Fragment>
                   <TextInput
                     name="email"
-                    label={i18n.t("email")}
+                    label={i18n.t("inputLabel.email")}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
                     value={values.email}
-                    placeholder={i18n.t("emailInputPlaceholder")}
+                    placeholder={i18n.t("placeholder.emailInput")}
                     autoCapitalize="none"
                     errorMessage={touched.email && errors.email}
                   />
                   <TextInput
                     name="password"
-                    label={i18n.t("password")}
+                    label={i18n.t("inputLabel.password")}
                     onChange={setFieldValue}
                     onTouch={setFieldTouched}
                     value={values.password}
-                    placeholder={i18n.t("passwordInputPlaceholder")}
+                    placeholder={i18n.t("placeholder.passwordInput")}
                     autoCapitalize="none"
                     errorMessage={touched.password && errors.password}
                     secureTextEntry
@@ -101,7 +101,7 @@ export default class SignInScreen extends Component {
                   <Button
                     onPress={handleSubmit}
                     loading={isSubmitting}
-                    title={i18n.t("signInButton")}
+                    title={i18n.t("buttonLabel.signIn")}
                     disabled={!isValid || isSubmitting}
                   />
                 </React.Fragment>
@@ -114,7 +114,7 @@ export default class SignInScreen extends Component {
           onPress={this._handleSignUp}
         >
           <Text style={styles.newAccountText}>
-            {i18n.t("newAccountButton")}
+            {i18n.t("buttonLabel.newAccount")}
           </Text>
         </TouchableHighlight>
       </Container>

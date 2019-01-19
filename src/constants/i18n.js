@@ -2,27 +2,61 @@ import { Localization } from "expo";
 import i18n from "i18n-js";
 
 const en = {
-  newAccountButton: "Create a new account",
-  email: "Email",
-  emailInputPlaceholder: "your email",
-  password: "Password",
-  passwordInputPlaceholder: "your password",
-  signInButton: "SignIn",
-  emailInvalid: "This email isn't valid",
-  passwordMinCharacters: "The password has at least 8 characters",
-  requiredInput: "This field is required"
+  screenTitle: {
+    newAccount: "create new account"
+  },
+  buttonLabel: {
+    newAccount: "Create a new account",
+    signIn: "SignIn",
+    signUp: "SignUp"
+  },
+  inputLabel: {
+    email: "Email",
+    password: "Password",
+    fullName: "Full Name",
+    confirmedPassword: "Confirm Password"
+  },
+  placeholder: {
+    emailInput: "your email",
+    passwordInput: "your password",
+    fullNameInput: "your full name",
+    confirmedPasswordInput: "your password again"
+  },
+  error: {
+    confirmedPassword: "The passwords must be equal",
+    emailInvalid: "This email isn't valid",
+    passwordMinCharacters: "The password has at least 8 characters",
+    requiredInput: "This field is required"
+  }
 };
 
 const pt = {
-  newAccountButton: "Criar uma nova conta",
-  email: "Email",
-  emailInputPlaceholder: "seu email",
-  password: "Senha",
-  passwordInputPlaceholder: "sua senha",
-  signInButton: "Entrar",
-  emailInvalid: "Esse email não é válido",
-  passwordMinCharacters: "A senha tem no mínimo 8 caracteres",
-  requiredInput: "É necessário preencher esse campo"
+  screenTitle: {
+    newAccount: "criar nova conta"
+  },
+  buttonLabel: {
+    newAccount: "Criar uma nova conta",
+    signIn: "Entrar",
+    signUp: "Criar"
+  },
+  inputLabel: {
+    email: "Email",
+    password: "Senha",
+    fullName: "Nome Completo",
+    confirmedPassword: "Confirmar Senha"
+  },
+  placeholder: {
+    emailInput: "seu email",
+    passwordInput: "sua senha",
+    fullNameInput: "seu nome completo",
+    confirmedPassword: "sua senha novamente"
+  },
+  error: {
+    confirmedPassword: "As senhas devem ser iguais",
+    emailInvalid: "Esse email não é válido",
+    passwordMinCharacters: "A senha tem no mínimo 8 caracteres",
+    requiredInput: "É necessário preencher esse campo"
+  }
 };
 
 const translations = { en, pt };
