@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     color: "#000"
   },
   buttonContainerStyle: {
-    marginTop: 20,
+    marginVertical: 20,
     borderRadius: 50,
     backgroundColor: "#FFF"
   },
