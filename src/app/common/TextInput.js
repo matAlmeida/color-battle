@@ -27,6 +27,7 @@ export default class TextInput extends Component {
         onBlur={this._handleTouch}
         placeholderTextColor="#FFF"
         labelStyle={styles.labelStyle}
+        errorStyle={styles.errorStyle}
       />
     );
   }
@@ -55,5 +56,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     paddingHorizontal: 20
+  },
+  errorStyle: {
+    alignSelf: "center",
+    fontSize: 14,
+    fontWeight: "bold"
   }
 });

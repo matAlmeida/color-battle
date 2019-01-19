@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 import { LinearGradient } from "expo";
-import { StackActions, NavigationActions } from "react-navigation";
+import { Button } from "react-native-elements";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 import Layout from "@constants/Layout";
 import i18n from "@constants/i18n";
-import { Container, TextInput, Button } from "@common";
+import { Container, TextInput } from "@common";
 
-export default class SignInScreen extends Component {
+export default class SignUpScreen extends Component {
   static navigationOptions = {
     header: null
   };
@@ -22,19 +22,8 @@ export default class SignInScreen extends Component {
     }).isRequired
   };
 
-  _handleSignIn = values => {
+  _handleSubmit = values => {
     console.log(values);
-    const resetAction = StackActions.reset({
-      index: 0,
-      key: null,
-      actions: [NavigationActions.navigate({ routeName: "Main" })]
-    });
-
-    setTimeout(() => this.props.navigation.dispatch(resetAction), 1500);
-  };
-
-  _handleSignUp = () => {
-    this.props.navigation.navigate("SignUp");
   };
 
   render() {
@@ -47,33 +36,31 @@ export default class SignInScreen extends Component {
           end={[0, 1]}
         />
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>color battle</Text>
+          <Text style={styles.titleText}>color battle UP</Text>
         </View>
         <View style={styles.contentConteiner}>
           <Formik
             ref={form => (this.form = form)}
             initialValues={{
-              email: "mat.almeida@live",
+              email: "",
               password: "senha123"
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
-                .email(i18n.t("emailInvalid"))
-                .required(i18n.t("requiredInput")),
+                .email()
+                .required(),
               password: Yup.string()
-                .min(8, i18n.t("passwordMinCharacters"))
-                .required(i18n.t("requiredInput"))
+                .min(8)
+                .required()
             })}
-            onSubmit={this._handleSignIn}
+            onSubmit={this._handleSubmit}
             render={({
               values,
               handleSubmit,
               setFieldValue,
               setFieldTouched,
               isSubmitting,
-              isValid,
-              errors,
-              touched
+              isValid
             }) => {
               return (
                 <React.Fragment>
@@ -85,7 +72,6 @@ export default class SignInScreen extends Component {
                     value={values.email}
                     placeholder={i18n.t("emailInputPlaceholder")}
                     autoCapitalize="none"
-                    errorMessage={touched.email && errors.email}
                   />
                   <TextInput
                     name="password"
@@ -95,14 +81,16 @@ export default class SignInScreen extends Component {
                     value={values.password}
                     placeholder={i18n.t("passwordInputPlaceholder")}
                     autoCapitalize="none"
-                    errorMessage={touched.password && errors.password}
                     secureTextEntry
                   />
                   <Button
                     onPress={handleSubmit}
                     loading={isSubmitting}
                     title={i18n.t("signInButton")}
-                    disabled={!isValid}
+                    buttonStyle={styles.buttonStyle}
+                    titleStyle={styles.buttonTitleStyle}
+                    containerStyle={styles.buttonContainerStyle}
+                    disabled={!isValid || isSubmitting}
                   />
                 </React.Fragment>
               );
@@ -111,7 +99,7 @@ export default class SignInScreen extends Component {
         </View>
         <TouchableHighlight
           style={styles.newAccountButton}
-          onPress={this._handleSignUp}
+          onPress={() => console.log("Criar nova conta")}
         >
           <Text style={styles.newAccountText}>
             {i18n.t("newAccountButton")}
@@ -140,6 +128,20 @@ const styles = StyleSheet.create({
   titleText: {
     fontFamily: "coolvetica",
     fontSize: 38
+  },
+  buttonTitleStyle: {
+    color: "#000"
+  },
+  buttonContainerStyle: {
+    marginTop: 20,
+    borderRadius: 50,
+    backgroundColor: "#FFF"
+  },
+  buttonStyle: {
+    paddingVertical: 10,
+    borderRadius: 50,
+    backgroundColor: "#FFF",
+    elevation: 0
   },
   contentConteiner: {
     flex: 1

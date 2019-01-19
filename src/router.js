@@ -1,9 +1,13 @@
 import { createAppContainer, createStackNavigator } from "react-navigation";
 
-import SignIn from "@app/signIn/SignInScreen";
+import SignIn from "@app/signIn/SignInContainer";
+import SignUp from "@app/signUp/SignUpContainer";
+import Main from "@app/main/MainContainer";
 
 const Routes = createStackNavigator({
-  SignIn
+  SignIn,
+  SignUp,
+  Main
 });
 
 export default createAppContainer(Routes);
