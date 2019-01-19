@@ -2,6 +2,9 @@ import { Localization } from "expo";
 import i18n from "i18n-js";
 
 const en = {
+  greeting: {
+    homeScreen: "Hello {{firstName}}"
+  },
   screenTitle: {
     newAccount: "create new account"
   },
@@ -31,6 +34,9 @@ const en = {
 };
 
 const pt = {
+  greeting: {
+    homeScreen: "Olá {{firstName}}"
+  },
   screenTitle: {
     newAccount: "criar nova conta"
   },

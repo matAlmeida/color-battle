@@ -1,14 +1,25 @@
-import { createAppContainer, createStackNavigator } from "react-navigation";
+import {
+  createAppContainer,
+  createStackNavigator,
+  createBottomTabNavigator
+} from "react-navigation";
 
 import SignIn from "@app/signIn/SignInContainer";
 import SignUp from "@app/signUp/SignUpContainer";
-import Main from "@app/main/MainContainer";
+import MainScreen from "@app/main/MainContainer";
+
+const Main = createBottomTabNavigator({
+  MainScreen
+});
 
 const Routes = createStackNavigator(
   {
     SignIn,
     SignUp,
-    Main
+    Main: {
+      screen: Main,
+      navigationOptions: { header: null }
+    }
   },
   {
     initialRouteName: "Main"
