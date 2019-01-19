@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     ...Platform.select({
       android: {
-        paddingTop: 25
+        paddingTop: 24
       }
     }),
     flex: 1,

@@ -8,6 +8,9 @@ const en = {
   screenTitle: {
     newAccount: "create new account"
   },
+  tabBarLabel: {
+    homeScreen: "Home"
+  },
   buttonLabel: {
     newAccount: "Create a new account",
     signIn: "SignIn",
@@ -39,6 +42,9 @@ const pt = {
   },
   screenTitle: {
     newAccount: "criar nova conta"
+  },
+  tabBarLabel: {
+    homeScreen: "Início"
   },
   buttonLabel: {
     newAccount: "Criar uma nova conta",

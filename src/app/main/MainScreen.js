@@ -6,9 +6,13 @@ import { Container } from "@common";
 import i18n from "@constants/i18n";
 
 export default class MainScreen extends Component {
+  static navigationOptions = {
+    title: i18n.t("tabBarLabel.homeScreen")
+  };
+
   render() {
     return (
-      <Container>
+      <Container hasHeader>
         <Text style={styles.titleText}>
           {i18n
             .t("greeting.homeScreen", { firstName: "Matheus" })
