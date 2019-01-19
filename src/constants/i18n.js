@@ -49,7 +49,7 @@ const pt = {
     emailInput: "seu email",
     passwordInput: "sua senha",
     fullNameInput: "seu nome completo",
-    confirmedPassword: "sua senha novamente"
+    confirmedPasswordInput: "sua senha novamente"
   },
   error: {
     confirmedPassword: "As senhas devem ser iguais",

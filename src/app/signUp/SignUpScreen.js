@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Text, View, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { LinearGradient } from "expo";
+import { StackActions, NavigationActions } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -22,8 +23,15 @@ export default class SignUpScreen extends Component {
     }).isRequired
   };
 
-  _handleSubmit = values => {
+  _handleSignUp = values => {
     console.log(values);
+    const resetAction = StackActions.reset({
+      index: 0,
+      key: null,
+      actions: [NavigationActions.navigate({ routeName: "Main" })]
+    });
+
+    setTimeout(() => this.props.navigation.dispatch(resetAction), 1500);
   };
 
   render() {
@@ -59,17 +67,22 @@ export default class SignUpScreen extends Component {
                   .min(8, i18n.t("error.passwordMinCharacters"))
                   .required(i18n.t("error.requiredInput")),
                 confirmedPassword: Yup.string()
-                  .oneOf([Yup.ref("password", null)])
+                  .oneOf(
+                    [Yup.ref("password", null)],
+                    i18n.t("error.confirmedPassword")
+                  )
                   .required(i18n.t("error.requiredInput"))
               })}
-              onSubmit={this._handleSubmit}
+              onSubmit={this._handleSignUp}
               render={({
                 values,
                 handleSubmit,
                 setFieldValue,
                 setFieldTouched,
                 isSubmitting,
-                isValid
+                isValid,
+                errors,
+                touched
               }) => {
                 return (
                   <React.Fragment>
@@ -80,7 +93,8 @@ export default class SignUpScreen extends Component {
                       onTouch={setFieldTouched}
                       value={values.fullName}
                       placeholder={i18n.t("placeholder.fullNameInput")}
-                      autoCapitalize="none"
+                      autoCapitalize="words"
+                      errorMessage={touched.fullName && errors.fullName}
                     />
                     <TextInput
                       name="email"
@@ -90,6 +104,7 @@ export default class SignUpScreen extends Component {
                       value={values.email}
                       placeholder={i18n.t("placeholder.emailInput")}
                       autoCapitalize="none"
+                      errorMessage={touched.email && errors.email}
                     />
                     <TextInput
                       name="password"
@@ -99,6 +114,7 @@ export default class SignUpScreen extends Component {
                       value={values.password}
                       placeholder={i18n.t("placeholder.passwordInput")}
                       autoCapitalize="none"
+                      errorMessage={touched.password && errors.password}
                       secureTextEntry
                     />
                     <TextInput
@@ -109,6 +125,9 @@ export default class SignUpScreen extends Component {
                       value={values.confirmedPassword}
                       placeholder={i18n.t("placeholder.confirmedPasswordInput")}
                       autoCapitalize="none"
+                      errorMessage={
+                        touched.confirmedPassword && errors.confirmedPassword
+                      }
                       secureTextEntry
                     />
                     <Button
