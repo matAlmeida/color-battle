@@ -36,7 +36,7 @@ export default class SignUpScreen extends Component {
           end={[0, 1]}
         />
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>color battle UP</Text>
+          <Text style={styles.titleText}>criar nova conta</Text>
         </View>
         <View style={styles.contentConteiner}>
           <Formik
@@ -97,14 +97,6 @@ export default class SignUpScreen extends Component {
             }}
           />
         </View>
-        <TouchableHighlight
-          style={styles.newAccountButton}
-          onPress={() => console.log("Criar nova conta")}
-        >
-          <Text style={styles.newAccountText}>
-            {i18n.t("newAccountButton")}
-          </Text>
-        </TouchableHighlight>
       </Container>
     );
   }

@@ -53,8 +53,8 @@ export default class SignInScreen extends Component {
           <Formik
             ref={form => (this.form = form)}
             initialValues={{
-              email: "mat.almeida@live",
-              password: "senha123"
+              email: "",
+              password: ""
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -102,7 +102,7 @@ export default class SignInScreen extends Component {
                     onPress={handleSubmit}
                     loading={isSubmitting}
                     title={i18n.t("signInButton")}
-                    disabled={!isValid}
+                    disabled={!isValid || isSubmitting}
                   />
                 </React.Fragment>
               );

@@ -4,10 +4,15 @@ import SignIn from "@app/signIn/SignInContainer";
 import SignUp from "@app/signUp/SignUpContainer";
 import Main from "@app/main/MainContainer";
 
-const Routes = createStackNavigator({
-  SignIn,
-  SignUp,
-  Main
-});
+const Routes = createStackNavigator(
+  {
+    SignIn,
+    SignUp,
+    Main
+  },
+  {
+    initialRouteName: "SignUp"
+  }
+);
 
 export default createAppContainer(Routes);
